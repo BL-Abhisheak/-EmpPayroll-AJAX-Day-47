@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee AJAX Promise Demo</title>
+</head>
+<body>
+
+<h2>Employee List (AJAX + Promise)</h2>
+
+<button onclick="loadEmployees()">Load Employees</button>
+
+<ul id="employeeList"></ul>
+
+<script>
+function loadEmployees() {
+    fetch("/employees")       
+        .then(response => response.json())  
+        .then(data => {
+            const list = document.getElementById("employeeList");
+            list.innerHTML = "";
+
+            data.employees.forEach(emp => {
+                const li = document.createElement("li");
+                li.textContent = `${emp.name} | ${emp.department} | ₹${emp.salary}`;
+                list.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
+</script>
+
+</body>
+</html>
